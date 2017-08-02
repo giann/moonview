@@ -4,6 +4,7 @@ local global = js.global
 local document = global.document
 
 local lustache = require("lustache")
+local Class = require("hump.class")
 
 -- Alias for document.querySelectorAll
 local q = function(query)
@@ -15,7 +16,34 @@ local q = function(query)
         table.insert(elements, result[i])
     end
 
-    return elements
+    if #elements > 0 then
+        return #elements > 1 and elements or elements[1]
+    end
+
+    return nil
 end
 
-q("#content")[1].innerHTML = lustache:render("Hello {{name}}", { name = "there" })
+local View = Class {
+
+    init = function(self, options)
+        self.template = options and options.template or nil
+        self.target   = options and options.target or nil
+        self.model    = options and options.model or {}
+    end
+
+}
+
+function View:render()
+    local template = self.template and q(self.template) or nil
+    template = template and template.textContent or nil
+
+    local target = self.target and q(self.target) or nil
+
+    if target then
+        target.innerHTML = lustache:render(template, self.model)
+    end
+end
+
+return {
+    View = View
+}
