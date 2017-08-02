@@ -1,0 +1,15 @@
+rock_manifest = {
+   doc = {
+      LICENSE = "a3c5f6dfbf4c940b20a05acc696d5323",
+      ["README.md"] = "8dd84b16fd8e8609377ff299f36349b9"
+   },
+   lua = {
+      lustache = {
+         ["context.lua"] = "6daf895002bf764562f37976a707f903",
+         ["renderer.lua"] = "8ad9cb062094e6a54050cc5f7297809d",
+         ["scanner.lua"] = "1b2491083f0b7a30113aba009dc00788"
+      },
+      ["lustache.lua"] = "e04fd5d96821ec2361cc972b7dfe631b"
+   },
+   ["lustache-1.3.1-0.rockspec"] = "840ecd41bf19ed1751916de2cd46229e"
+}

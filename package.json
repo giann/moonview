@@ -1,0 +1,29 @@
+{
+  "name": "moonview",
+  "version": "1.0.0",
+  "description": "MV** lua framework for fengari",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/giann/moonview.git"
+  },
+  "keywords": [
+    "lua",
+    "fengari"
+  ],
+  "author": "Benoit Giannangeli <giann008@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/giann/moonview/issues"
+  },
+  "homepage": "https://github.com/giann/moonview#readme",
+  "dependencies": {
+    "babili-webpack-plugin": "^0.1.2",
+    "fengari": "fengari-lua/fengari",
+    "fengari-interop": "fengari-lua/fengari-interop",
+    "webpack": "^3.4.1"
+  }
+}
