@@ -1,8 +1,13 @@
 local global = js.global
 local document = global.document
 
--- Alias for document.querySelectorAll
+-- Alias for document.querySelector
 local q = function(query)
+    return document:querySelector(query)
+end
+
+-- Alias for document.querySelectorAll
+local qall = function(query)
     local result  = document:querySelectorAll(query)
 
     -- Store result in lua array
@@ -11,11 +16,7 @@ local q = function(query)
         table.insert(elements, result[i])
     end
 
-    if #elements > 0 then
-        return #elements > 1 and elements or elements[1]
-    end
-
-    return nil
+    return elements
 end
 
 -- Fetch n url in parallel, must be run in a coroutine
@@ -61,5 +62,6 @@ end
 
 return {
     q = q,
+    qall = qall,
     fetch = fetch
 }

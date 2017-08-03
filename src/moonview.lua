@@ -1,7 +1,9 @@
 local global = js.global
 local document = global.document
 
-local q = require("moonview.helpers").q
+local helpers = require("moonview.helpers")
+local q = helpers.q
+local qall = helpers.qall
 local lustache = require("lustache")
 local Class = require("hump.class")
 local Signal = require("hump.signal")
@@ -13,12 +15,10 @@ local View = Class {
         self.template = options and options.template or nil
         self.target   = options and options.target or nil
         self.model    = options and options.model or {}
-
-        self.modelUpdate = options and options.modelUpdate or function() end
+        self.events   = options and options.events or {}
 
         Signal.register("model-update", function(model, k, v)
             if (model == self.model) then
-                self:modelUpdate(k, v)
                 self:render()
             end
         end)
@@ -30,8 +30,23 @@ local View = Class {
 
         local target = self.target and q(self.target) or nil
 
-        if target then
+        if target and template then
             target.innerHTML = lustache:render(template, rawget(self.model, "model"))
+
+            self:registerEvents()
+        end
+    end,
+
+    registerEvents = function(self)
+        for eventSelector, callback in pairs(self.events) do
+            local event, selector = eventSelector:match("(%w+)(.+)")
+            local elements = qall(selector)
+
+            for i = 1, #elements do
+                elements[i]:addEventListener(event, function(event)
+                    return callback(self, event)
+                end)
+            end
         end
     end
 

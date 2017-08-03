@@ -1,6 +1,9 @@
-package.path = "dist/lua_modules/share/lua/5.3/?.lua;dist/lua_modules/share/lua/5.3/?/init.lua"
+package.path = "lua_modules/share/lua/5.3/?.lua;lua_modules/share/lua/5.3/?/init.lua"
 
 local moonview = require("moonview")
+local helpers = require("moonview.helpers")
+local q = helpers.q
+local qall = helpers.qall
 
 local View = moonview.View
 local Model = moonview.Model
@@ -12,7 +15,12 @@ local m = Model {
 local v = View {
     target   = "#content",
     template = "#content-template",
-    model    = m
+    model    = m,
+    events   = {
+        ["click #ok"] = function(self, event)
+            self.model.name = q("#name").value
+        end
+    }
 }
 
 v:render()
