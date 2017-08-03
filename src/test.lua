@@ -1,8 +1,4 @@
-package.path = "src/?.lua;src/?/init.lua"
-
 local moonview = require("moonview")
-
-print(package.path)
 
 local View = moonview.View
 

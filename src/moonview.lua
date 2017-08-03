@@ -3,25 +3,9 @@ package.path = "lua_modules/share/lua/5.3/?.lua;lua_modules/share/lua/5.3/?/init
 local global = js.global
 local document = global.document
 
+local q = require("moonview.helpers").q
 local lustache = require("lustache")
 local Class = require("hump.class")
-
--- Alias for document.querySelectorAll
-local q = function(query)
-    local result  = document:querySelectorAll(query)
-
-    -- Store result in lua array
-    local elements = {}
-    for i = 0, result.length - 1 do
-        table.insert(elements, result[i])
-    end
-
-    if #elements > 0 then
-        return #elements > 1 and elements or elements[1]
-    end
-
-    return nil
-end
 
 local View = Class {
 
