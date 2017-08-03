@@ -16,7 +16,7 @@ lualib.luaL_openlibs(L);
 lauxlib.luaL_requiref(L, lua.to_luastring("js"), interop.luaopen_js, 1);
 lua.lua_pop(L, 1); /* remove lib */
 
-let ok = lauxlib.luaL_loadfile(L, lua.to_luastring("src/test.lua"));
+let ok = lauxlib.luaL_loadfile(L, lua.to_luastring("dist/test.lua"));
 
 if (ok === lua.LUA_OK) {
     ok = lua.lua_pcall(L, 0, 0, 0); /* TODO: use message handler to add traceback */

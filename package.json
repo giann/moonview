@@ -24,6 +24,8 @@
     "babili-webpack-plugin": "^0.1.2",
     "fengari": "fengari-lua/fengari",
     "fengari-interop": "fengari-lua/fengari-interop",
-    "webpack": "^3.4.1"
+    "luamin": "^1.0.4",
+    "webpack": "^3.4.1",
+    "webpack-shell-plugin": "^0.5.0"
   }
 }

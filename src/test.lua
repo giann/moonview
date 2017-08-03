@@ -1,4 +1,4 @@
-package.path = "lua_modules/share/lua/5.3/?.lua;lua_modules/share/lua/5.3/?/init.lua"
+package.path = "dist/lua_modules/share/lua/5.3/?.lua;dist/lua_modules/share/lua/5.3/?/init.lua"
 
 local moonview = require("moonview")
 
