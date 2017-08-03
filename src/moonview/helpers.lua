@@ -15,8 +15,10 @@ local q = function(query)
     return nil
 end
 
--- Fetch n url in parallel, must be run in a coroutine co
-local fetch = function(co, ...)
+-- Fetch n url in parallel, must be run in a coroutine
+local fetch = function(...)
+    local co = coroutine.running()
+
     local requests = {...}
     for i = 1, #requests do
         local promise = js.global:fetch(requests[i])
@@ -37,8 +39,10 @@ local fetch = function(co, ...)
     return table.unpack(results)
 end
 
--- Take full paths for now, should be in coroutine co
-local require = function(co, ...)
+-- Take full paths for now, should be in coroutine
+local require = function(...)
+    local co = coroutine.running()
+
     local paths = table.pack(...)
 
     local modules = table.pack(fetch(co, table.unpack(paths)))
