@@ -1,3 +1,6 @@
+local global = js.global
+local document = global.document
+
 -- Alias for document.querySelectorAll
 local q = function(query)
     local result  = document:querySelectorAll(query)

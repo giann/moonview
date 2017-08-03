@@ -1,5 +1,3 @@
-package.path = "lua_modules/share/lua/5.3/?.lua;lua_modules/share/lua/5.3/?/init.lua"
-
 local global = js.global
 local document = global.document
 
