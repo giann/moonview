@@ -1,15 +1,27 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <body>
-    <script type="text/lustache" id="content-template">
-        <p>Hello <b>{{name}}</b></p>
+    <style>
+        html {
+            font-family: monospace;
+        }
+    </style>
 
-        <p>Name: <input type="text" id="name" value="{{name}}"> <button id="ok">ok</button></p>
+    <script type="text/lustache" id="app-template">
+        <ul id="todo-list">
+            {{#todos}}
+            <li>{{title}} <a class="delete" data="{{id}}">x</a></li>
+            {{/todos}}
+        </ul>
+
+        <p>
+            <input type="text" id="new-todo"> <a id="add">+</a>
+        </p>
     </script>
 
-    <p>Do your thing here:</p>
+    <p>Todo</p>
 
-    <div id="content">
+    <div id="app">
         #content
     </div>
 

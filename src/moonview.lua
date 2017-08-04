@@ -1,12 +1,12 @@
 local global = js.global
 local document = global.document
 
-local helpers = require("moonview.helpers")
-local q = helpers.q
-local qall = helpers.qall
+local helpers  = require("moonview.helpers")
+local q        = helpers.q
+local qall     = helpers.qall
 local lustache = require("lustache")
-local Class = require("hump.class")
-local Signal = require("hump.signal")
+local Class    = require("hump.class")
+local Signal   = require("hump.signal")
 
 -- View
 local View = Class {
@@ -73,7 +73,44 @@ local Model = Class {
     end
 }
 
+local Collection = Class {
+    
+    init = function(self, collection)
+        rawset(self, "collection", collection)
+    end,
+
+    __newindex = function(self, k, v)
+        local exist = rawget(self.collection, k) ~= nil
+        local signals = { "collection-update" }
+
+        if exist then
+            if v == nil then
+                table.insert(signals, "collection-remove")
+            end
+        else
+            if v ~= nil then
+                table.insert(signals, "collection-add")
+            end
+        end
+
+        rawset(self.collection, k, v)
+
+        for _, signal in ipairs(signals) do
+            Signal.emit(signal, self, k, v)
+        end
+    end,
+
+    __index = function(self, k)
+        return rawget(self.collection, k)
+    end,
+
+    __len = function(self)
+        return rawlen(self.collection)
+    end
+}
+
 return {
     View = View,
-    Model = Model
+    Model = Model,
+    Collection = Collection
 }

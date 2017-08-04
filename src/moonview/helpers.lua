@@ -12,8 +12,8 @@ local qall = function(query)
 
     -- Store result in lua array
     local elements = {}
-    for i = 0, result.length - 1 do
-        table.insert(elements, result[i])
+    for element in js.of(result) do
+        table.insert(elements, element)
     end
 
     return elements
