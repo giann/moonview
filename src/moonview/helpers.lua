@@ -47,7 +47,7 @@ end
 local require = function(...)
     local co = coroutine.running()
 
-    local paths = table.pack(...)
+    local paths = {...}
 
     local modules = table.pack(fetch(co, table.unpack(paths)))
 

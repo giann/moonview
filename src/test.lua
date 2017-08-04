@@ -23,7 +23,6 @@ local v = View {
     events   = {
         ["click #add"] = function(self)
             table.insert(m.todos, {
-                id = #m.todos + 1,
                 title = q("#new-todo").value    
             })
         end,
@@ -31,7 +30,6 @@ local v = View {
         ["keydown #new-todo"] = function(self, context, event)
             if event.key == "Enter" then
                 table.insert(m.todos, {
-                    id = #m.todos + 1,
                     title = q("#new-todo").value    
                 })
             end
@@ -40,7 +38,10 @@ local v = View {
         ["click .delete"] = function(self, context, event)
             table.remove(m.todos, context:getAttribute("data-row"))
         end
-    }
+    },
+    afterRender = function(self)
+        q("#new-todo"):focus()
+    end
 }
 
 Signal.register("collection-update", function(collection, i, element)
@@ -50,3 +51,5 @@ Signal.register("collection-update", function(collection, i, element)
 end)
 
 v:render()
+
+q("#new-todo"):focus()

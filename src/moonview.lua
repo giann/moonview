@@ -7,9 +7,7 @@ local qall     = helpers.qall
 local etlua    = require("etlua")
 local Signal   = require("hump.signal")
 
--- View
 local View = function(options)
-
     local view = {
         template = options and options.template or nil,
         compiled = nil,
@@ -35,7 +33,9 @@ local View = function(options)
                     self.compiled = etlua.compile(template)
                 end
 
+                self:beforeRender()
                 target.innerHTML = self.compiled(rawget(self.model, "model"))
+                self:afterRender()
 
                 self:registerEvents()
             end
@@ -52,7 +52,11 @@ local View = function(options)
                     end)
                 end
             end
-        end
+        end,
+
+        beforeRender = options and options.beforeRender or function() end,
+
+        afterRender = options and options.afterRender or function() end
     }
 
     Signal.register("model-update", function(model, k, v)
@@ -64,7 +68,6 @@ local View = function(options)
     return view
 end
 
--- Model
 local Model = function(options)
     return setmetatable({
         model = options
@@ -85,9 +88,9 @@ local Model = function(options)
 end
 
 local Collection = function(collection)
-    return setmetatable( {
-            collection = collection    
-        },{
+    return setmetatable({
+        collection = collection    
+    }, {
         __newindex = function(self, k, v)
             local exist = rawget(self.collection, k) ~= nil
             local signals = { "collection-update" }
