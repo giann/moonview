@@ -12,24 +12,7 @@ local Collection = moonview.Collection
 
 local m = Model {
     todos = Collection {
-        {
-            id = 1, -- Could be avoided if lustache gave access to index in loops
-            title = "todo item 1"
-        },
-        {
-            id = 2, -- Could be avoided if lustache gave access to index in loops
-            title = "todo item 2"
-        }
-    },
-    list = {
-        {
-            id = 1, -- Could be avoided if lustache gave access to index in loops
-            title = "todo item 1"
-        },
-        {
-            id = 2, -- Could be avoided if lustache gave access to index in loops
-            title = "todo item 2"
-        }
+        { title = "todo item 1" }
     }
 }
 
@@ -38,22 +21,24 @@ local v = View {
     template = "#app-template",
     model    = m,
     events   = {
-        ["click #add"] = function(self, event)
+        ["click #add"] = function(self)
             table.insert(m.todos, {
                 id = #m.todos + 1,
                 title = q("#new-todo").value    
             })
         end,
 
-        ["click .remove"] = function(self, event)
-            local toDelete = event.currentTarget:getAttribute("data")
-
-            for i, todo in ipairs(m.todos) do
-                if todo.id == toDelete then
-                    table.remove(m.todos, i)
-                    return
-                end
+        ["keydown #new-todo"] = function(self, context, event)
+            if event.key == "Enter" then
+                table.insert(m.todos, {
+                    id = #m.todos + 1,
+                    title = q("#new-todo").value    
+                })
             end
+        end,
+
+        ["click .delete"] = function(self, context, event)
+            table.remove(m.todos, context:getAttribute("data-row"))
         end
     }
 }

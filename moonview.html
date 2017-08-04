@@ -5,13 +5,19 @@
         html {
             font-family: monospace;
         }
+
+        a:hover {
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: underline;
+        }
     </style>
 
     <script type="text/lustache" id="app-template">
         <ul id="todo-list">
-            {{#todos}}
-            <li>{{title}} <a class="delete" data="{{id}}">x</a></li>
-            {{/todos}}
+            <% for i, todo in ipairs(todos) do %>
+            <li><%= todo.title %> <a class="delete" data-row="<%= i %>">x</a></li>
+            <% end %>
         </ul>
 
         <p>
@@ -22,7 +28,6 @@
     <p>Todo</p>
 
     <div id="app">
-        #content
     </div>
 
     <script src="dist/moonview.min.js" type="text/javascript"></script>
