@@ -14,11 +14,89 @@ dependencies = {
             name = "lua"
          }
       }
+   },
+   stdlib = {
+      ["41.2.0-1"] = {
+         {
+            constraints = {
+               {
+                  op = ">=",
+                  version = {
+                     5, 1, string = "5.1"
+                  }
+               },
+               {
+                  op = "<",
+                  version = {
+                     5, 4, string = "5.4"
+                  }
+               }
+            },
+            name = "lua"
+         }
+      }
    }
 }
 modules = {
    etlua = {
       "etlua/1.3.0-1"
+   },
+   std = {
+      "stdlib/41.2.0-1"
+   },
+   ["std.base"] = {
+      "stdlib/41.2.0-1"
+   },
+   ["std.container"] = {
+      "stdlib/41.2.0-1"
+   },
+   ["std.debug"] = {
+      "stdlib/41.2.0-1"
+   },
+   ["std.debug_init"] = {
+      "stdlib/41.2.0-1"
+   },
+   ["std.functional"] = {
+      "stdlib/41.2.0-1"
+   },
+   ["std.io"] = {
+      "stdlib/41.2.0-1"
+   },
+   ["std.list"] = {
+      "stdlib/41.2.0-1"
+   },
+   ["std.math"] = {
+      "stdlib/41.2.0-1"
+   },
+   ["std.object"] = {
+      "stdlib/41.2.0-1"
+   },
+   ["std.operator"] = {
+      "stdlib/41.2.0-1"
+   },
+   ["std.optparse"] = {
+      "stdlib/41.2.0-1"
+   },
+   ["std.package"] = {
+      "stdlib/41.2.0-1"
+   },
+   ["std.set"] = {
+      "stdlib/41.2.0-1"
+   },
+   ["std.strbuf"] = {
+      "stdlib/41.2.0-1"
+   },
+   ["std.strict"] = {
+      "stdlib/41.2.0-1"
+   },
+   ["std.string"] = {
+      "stdlib/41.2.0-1"
+   },
+   ["std.table"] = {
+      "stdlib/41.2.0-1"
+   },
+   ["std.tree"] = {
+      "stdlib/41.2.0-1"
    }
 }
 repository = {
@@ -30,6 +108,36 @@ repository = {
             dependencies = {},
             modules = {
                etlua = "etlua.lua"
+            }
+         }
+      }
+   },
+   stdlib = {
+      ["41.2.0-1"] = {
+         {
+            arch = "installed",
+            commands = {},
+            dependencies = {},
+            modules = {
+               std = "std.lua",
+               ["std.base"] = "std/base.lua",
+               ["std.container"] = "std/container.lua",
+               ["std.debug"] = "std/debug.lua",
+               ["std.debug_init"] = "std/debug_init/init.lua",
+               ["std.functional"] = "std/functional.lua",
+               ["std.io"] = "std/io.lua",
+               ["std.list"] = "std/list.lua",
+               ["std.math"] = "std/math.lua",
+               ["std.object"] = "std/object.lua",
+               ["std.operator"] = "std/operator.lua",
+               ["std.optparse"] = "std/optparse.lua",
+               ["std.package"] = "std/package.lua",
+               ["std.set"] = "std/set.lua",
+               ["std.strbuf"] = "std/strbuf.lua",
+               ["std.strict"] = "std/strict.lua",
+               ["std.string"] = "std/string.lua",
+               ["std.table"] = "std/table.lua",
+               ["std.tree"] = "std/tree.lua"
             }
          }
       }

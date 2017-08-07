@@ -122,8 +122,53 @@ local Collection = function(collection)
     })
 end
 
+local Router = function(routes)
+    local router = {
+        routes = routes
+    }
+
+    global.onpopstate = function(context, event)
+        local path = document.location.hash:sub(2)
+        local pathParts = path:split("/")
+
+        for route, callback in pairs(router.routes) do
+            -- If no parameter in the pattern just compare it as is
+            if (not route:find(":")) then
+                if (route == path) then
+                    callback(route, event.state)
+                end
+            else -- Else parse parameters
+                local routeParts = route:split("/")
+                local matching = true
+                local parameters = {}
+
+                if (#routeParts == #pathParts) then    
+                    for i = 1, #pathParts do
+                        local routePart = routeParts[i]
+                        local pathPart = pathParts[i]
+
+                        if (routePart:sub(1, 1) == ":") then
+                            table.insert(parameters, pathPart)
+                        elseif (routePart ~= pathPart) then
+                            matching = false
+                            break
+                        end
+                    end
+
+                    if (matching) then
+                        callback(table.unpack(parameters))
+                    end
+                end
+            end
+        end
+    end
+
+    return router
+end
+
 return {
     View = View,
     Model = Model,
-    Collection = Collection
+    Collection = Collection,
+    Router = Router
 }

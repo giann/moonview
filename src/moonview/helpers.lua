@@ -90,6 +90,17 @@ local require = function(...)
     return table.unpack(modules)
 end
 
+string.split = function(str, sep)
+    local result = {}
+    sep = sep or " "
+
+    for part in str:gmatch("[^" .. sep .. "]*") do
+        table.insert(result, part)
+    end
+
+    return result
+end
+
 return {
     q = q,
     qall = qall,
