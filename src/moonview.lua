@@ -92,7 +92,8 @@ local Collection = function(collection)
         collection = collection    
     }, {
         __newindex = function(self, k, v)
-            local exist = rawget(self.collection, k) ~= nil
+            local collection = rawget(self, "collection")
+            local exist = collection[k] ~= nil
             local signals = { "collection-update" }
 
             if (exist) then
@@ -105,7 +106,7 @@ local Collection = function(collection)
                 end
             end
 
-            rawget(self, "collection")[k] = v
+            collection[k] = v
 
             for _, signal in ipairs(signals) do
                 Signal.emit(signal, self, k, v)

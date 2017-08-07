@@ -1,6 +1,19 @@
 local global = js.global
 local document = global.document
 
+local Array = js.global.Array
+
+-- If the userdata is a js Array, return a shifted copy of it
+local shiftJsArray = function(userdata)
+    assert(type(userdata) == "userdata", "shiftJsArray expect a js array")
+
+    if (Array:isArray(userdata)) then
+        return js.new(Array, 1):concat(userdata)
+    end
+
+    return userdata
+end
+
 -- Alias for document.querySelector
 local q = function(query)
     return document:querySelector(query)
@@ -65,7 +78,7 @@ local fetchj = function(...)
     local results = {}
     for i = 1, #requests do
         local requestId, response = coroutine.yield()
-        results[requestId] = response
+        results[requestId] = shiftJsArray(response)
     end
 
     return table.unpack(results)
@@ -105,5 +118,6 @@ return {
     q = q,
     qall = qall,
     fetch = fetch,
-    fetchj = fetchj
+    fetchj = fetchj,
+    shiftJsArray = shiftJsArray
 }
