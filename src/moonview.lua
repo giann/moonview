@@ -16,7 +16,7 @@ local View = function(options)
         events   = options and options.events or {},
 
         setTemplate = function(self, template)
-            if self.template ~= template then
+            if (self.template ~= template) then
                 self.template = template
                 self.compiled = nil
             end
@@ -28,8 +28,8 @@ local View = function(options)
 
             local target = self.target and q(self.target) or nil
 
-            if target and template then
-                if not self.compiled then
+            if (target and template) then
+                if (not self.compiled) then
                     self.compiled = etlua.compile(template)
                 end
 
@@ -95,12 +95,12 @@ local Collection = function(collection)
             local exist = rawget(self.collection, k) ~= nil
             local signals = { "collection-update" }
 
-            if exist then
-                if v == nil then
+            if (exist) then
+                if (v == nil) then
                     table.insert(signals, "collection-remove")
                 end
             else
-                if v ~= nil then
+                if (v ~= nil) then
                     table.insert(signals, "collection-add")
                 end
             end

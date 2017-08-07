@@ -23,6 +23,8 @@ end
 local fetch = function(...)
     local co = coroutine.running()
 
+    assert(co, "fetch must be called inside a running coroutine")
+
     local requests = {...}
     for i = 1, #requests do
         local promise = js.global:fetch(requests[i])
@@ -47,6 +49,8 @@ end
 local fetchj = function(...)
     local co = coroutine.running()
 
+    assert(co, "fetchj must be called inside a running coroutine")
+
     local requests = {...}
     for i = 1, #requests do
         local promise = js.global:fetch(requests[i])
@@ -70,6 +74,8 @@ end
 -- Take full paths for now, should be in coroutine
 local require = function(...)
     local co = coroutine.running()
+
+    assert(co, "require must be called inside a running coroutine")
 
     local paths = {...}
 
