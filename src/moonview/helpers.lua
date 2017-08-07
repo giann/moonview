@@ -29,7 +29,31 @@ local fetch = function(...)
         promise["then"](promise, function(_, res)
             local textPromise = res:text()
             textPromise["then"](textPromise, function(_, text)
-                co(i, text)
+                coroutine.resume(co, i, text)
+            end)
+        end)
+    end
+
+    local results = {}
+    for i = 1, #requests do
+        local requestId, response = coroutine.yield()
+        results[requestId] = response
+    end
+
+    return table.unpack(results)
+end
+
+-- Fetch n url in parallel, must be run in a coroutine
+local fetchj = function(...)
+    local co = coroutine.running()
+
+    local requests = {...}
+    for i = 1, #requests do
+        local promise = js.global:fetch(requests[i])
+        promise["then"](promise, function(_, res)
+            local jsonPromise = res:json()
+            jsonPromise["then"](jsonPromise, function(_, json)
+                coroutine.resume(co, i, json)
             end)
         end)
     end
@@ -63,5 +87,6 @@ end
 return {
     q = q,
     qall = qall,
-    fetch = fetch
+    fetch = fetch,
+    fetchj = fetchj
 }
