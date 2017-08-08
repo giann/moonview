@@ -114,10 +114,16 @@ string.split = function(str, sep)
     return result
 end
 
+-- If e is empty, returns nil instead
+local ornil = function(e)
+    return #e > 0 and e or nil
+end
+
 return {
-    q = q,
-    qall = qall,
-    fetch = fetch,
-    fetchj = fetchj,
+    fetch        = fetch,
+    fetchj       = fetchj,
+    ornil        = ornil,
+    q            = q,
+    qall         = qall,
     shiftJsArray = shiftJsArray
 }
